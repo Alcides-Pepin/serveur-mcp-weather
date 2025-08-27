@@ -10,7 +10,7 @@ WEATHER_DIR = "weather"
 PORT = int(os.environ.get("PORT", 8001))
 
 # Initialize FastMCP server with host and port in constructor
-mcp = FastMCP("weather", host="0.0.0.0", port=PORT)
+mcp = FastMCP("generic-mcp-server", host="0.0.0.0", port=PORT)
 
 @mcp.tool()
 def ping() -> str:
@@ -26,7 +26,7 @@ def ping() -> str:
             "status": "ok",
             "message": "Oui le serveur marche",
             "timestamp": datetime.datetime.now().isoformat(),
-            "server": "Weather MCP Server"
+            "server": "Generic MCP Server"
         }
         return json.dumps(response, indent=2)
     except Exception as e:
