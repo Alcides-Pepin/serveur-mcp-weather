@@ -13,6 +13,26 @@ PORT = int(os.environ.get("PORT", 8001))
 mcp = FastMCP("weather", host="0.0.0.0", port=PORT)
 
 @mcp.tool()
+def ping() -> str:
+    """
+    Simple ping function to test if the MCP server is running.
+    
+    Returns:
+        JSON string confirming the server is working
+    """
+    try:
+        import datetime
+        response = {
+            "status": "ok",
+            "message": "Oui le serveur marche",
+            "timestamp": datetime.datetime.now().isoformat(),
+            "server": "Weather MCP Server"
+        }
+        return json.dumps(response, indent=2)
+    except Exception as e:
+        return json.dumps({"error": f"An error occurred: {str(e)}"})
+
+@mcp.tool()
 def get_current_weather(location: str) -> str:
     """
     Get current weather information for a specific location.
